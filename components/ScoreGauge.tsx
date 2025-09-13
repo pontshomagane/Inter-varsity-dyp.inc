@@ -25,7 +25,7 @@ const ScoreGauge: React.FC<ScoreGaugeProps> = ({ score }) => {
     <div className="relative w-48 h-48">
       <svg className="w-full h-full" viewBox="0 0 120 120">
         <circle
-          className="stroke-slate-700"
+          className="stroke-slate-200 dark:stroke-slate-700"
           strokeWidth="10"
           fill="transparent"
           r="52"
@@ -47,7 +47,7 @@ const ScoreGauge: React.FC<ScoreGaugeProps> = ({ score }) => {
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
         <span className={`text-5xl font-bold ${getScoreColor(score)}`}>{score}</span>
-        <span className="text-sm text-slate-400">Score</span>
+        <span className="text-sm text-slate-500 dark:text-slate-400">Score</span>
       </div>
     </div>
   );

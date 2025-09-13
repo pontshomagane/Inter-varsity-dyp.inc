@@ -1,4 +1,5 @@
 
+
 import React from 'react';
 import type { ChallengeCategory } from '../types';
 
@@ -15,27 +16,27 @@ const ChallengeCard: React.FC<ChallengeCardProps> = ({ challenge, onClick }) => 
   return (
     <div 
       onClick={onClick}
-      className="bg-slate-800/50 rounded-lg border border-slate-700 p-6 cursor-pointer transition-all duration-300 hover:border-cyan-400 hover:shadow-2xl hover:shadow-cyan-500/20 hover:-translate-y-1 group"
+      className="bg-white/50 dark:bg-slate-800/50 rounded-lg border border-slate-200 dark:border-slate-700 p-6 cursor-pointer transition-all duration-300 hover:border-cyan-500 dark:hover:border-cyan-400 hover:shadow-2xl hover:shadow-cyan-500/10 dark:hover:shadow-cyan-500/20 hover:-translate-y-1 group"
     >
       <div className="flex items-start justify-between">
-        <div className="text-cyan-400 transition-colors group-hover:text-cyan-300">
+        <div className="text-cyan-600 dark:text-cyan-400 transition-colors group-hover:text-cyan-500 dark:group-hover:text-cyan-300">
             {challenge.icon}
         </div>
         {isCompleted && (
-           <div className="flex items-center text-green-400 text-xs font-bold bg-green-900/50 px-2 py-1 rounded-full">
+           <div className="flex items-center text-green-600 dark:text-green-400 text-xs font-bold bg-green-500/10 dark:bg-green-900/50 px-2 py-1 rounded-full">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
              COMPLETED
            </div>
         )}
       </div>
-      <h3 className="text-xl font-bold mt-4 text-slate-100">{challenge.title}</h3>
-      <p className="text-slate-400 mt-2 text-sm h-10">{challenge.description}</p>
+      <h3 className="text-xl font-bold mt-4 text-slate-800 dark:text-slate-100">{challenge.title}</h3>
+      <p className="text-slate-500 dark:text-slate-400 mt-2 text-sm h-10">{challenge.description}</p>
       <div className="mt-4">
-        <div className="flex justify-between items-center text-xs text-slate-400 mb-1">
+        <div className="flex justify-between items-center text-xs text-slate-500 dark:text-slate-400 mb-1">
             <span>Progress</span>
             <span>{completedTasks} / {totalTasks}</span>
         </div>
-        <div className="w-full bg-slate-700 rounded-full h-1.5">
+        <div className="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-1.5">
             <div className="bg-cyan-500 h-1.5 rounded-full" style={{ width: `${(completedTasks / totalTasks) * 100}%`}}></div>
         </div>
       </div>

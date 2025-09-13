@@ -1,27 +1,17 @@
-export interface Level {
-  name: string;
-  minXp: number;
-  maxXp?: number; // Optional for the highest level
-  color: string;
-}
+// FIX: Implemented the missing type definitions for the application. This file was previously a placeholder.
+import React from 'react';
 
-export interface User {
-  name: string;
-  xp: number;
-  securityScore: number;
-  achievements?: Achievement[];
-}
-
-export interface ChallengeTask {
+export interface Task {
   id: string;
   description: string;
-  completed: boolean;
   points: number;
+  completed: boolean;
 }
 
-export interface SuspiciousElement {
-  id: string;
-  reason: string;
+export interface PasswordGameContent {
+  type: 'password-game';
+  tasks: Task[];
+  tips: string[];
 }
 
 export interface PhishingEmail {
@@ -30,82 +20,66 @@ export interface PhishingEmail {
   subject: string;
   body: string;
   isPhishing: boolean;
-  suspiciousElements: SuspiciousElement[];
+  suspiciousElements: { id: string; reason: string }[];
 }
 
-// Password Strength Game Types
-export interface PasswordCriteria {
-  id: string;
-  label: string;
-  description: string;
-  met: boolean;
-  points: number;
+export interface PhishingGameContent {
+  type: 'phishing-game';
+  tasks: Task[];
+  emails: PhishingEmail[];
 }
 
-export interface PasswordStrengthLevel {
-  name: string;
-  minScore: number;
-  color: string;
-  description: string;
+export interface TwoFactorMethod {
+    id: string;
+    name: string;
+    description: string;
+    pros: string[];
+    cons: string[];
 }
 
-export interface PasswordChallenge {
-  id: string;
-  title: string;
-  description: string;
-  scenario: string;
-  requirements: string[];
-  mockPasswords: string[];
-  correctPassword: string;
-  points: number;
-  completed: boolean;
+export interface TwoFactorGameContent {
+    type: '2fa-game';
+    tasks: Task[];
+    methods: TwoFactorMethod[];
 }
 
-export interface PasswordTip {
-  id: string;
-  title: string;
-  description: string;
-  category: 'general' | 'creation' | 'management' | 'security';
-}
-
-export interface Achievement {
-  id: string;
-  title: string;
-  description: string;
-  icon: string;
-  unlocked: boolean;
-  points: number;
-  requirement: string;
-}
-
-interface BaseContent {
+export interface SocialEngineeringScenario {
+    id: string;
+    type: string;
     title: string;
-    details: string[];
+    description: string;
+    options: { text: string; isCorrect: boolean }[];
+    feedback: { correct: string; incorrect: string };
 }
 
-type TaskContent = BaseContent & {
-    type: 'tasks';
-    tasks: ChallengeTask[];
-};
+export interface SocialEngineeringGameContent {
+    type: 'social-engineering-game';
+    tasks: Task[];
+    scenarios: SocialEngineeringScenario[];
+}
 
-type PhishingGameContent = BaseContent & {
-    type: 'phishing-game';
-    emails: PhishingEmail[];
-    tasks: ChallengeTask[]; // For XP calculation
-};
-
-type PasswordGameContent = BaseContent & {
-    type: 'password-game';
-    challenges: PasswordChallenge[];
-    tips: PasswordTip[];
-    tasks: ChallengeTask[]; // For XP calculation
-};
+export type ChallengeContent = PasswordGameContent | PhishingGameContent | TwoFactorGameContent | SocialEngineeringGameContent;
 
 export interface ChallengeCategory {
   id: string;
   title: string;
   description: string;
-  icon: JSX.Element;
-  points: number;
-  content: TaskContent | PhishingGameContent | PasswordGameContent;
+  icon: React.ReactNode;
+  content: ChallengeContent;
+}
+
+export interface UserProgress {
+    xp: number;
+    level: number;
+    score: number;
+}
+
+export type BadgeType = "Fortress Architect" | "Net Caster" | "Shield Bearer" | "Mind Reader" | "Privacy Paragon";
+
+export interface Achievement {
+    id: string;
+    name: BadgeType;
+    description: string;
+    unlocked: boolean;
+    timestamp?: number;
 }

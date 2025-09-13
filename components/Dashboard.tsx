@@ -1,55 +1,98 @@
-
 import React from 'react';
-import type { User, Level, ChallengeCategory } from '../types';
-import Header from './Header';
+import type { ChallengeCategory, UserProgress, Achievement } from '../types';
+import ChallengeCard from './ChallengeCard';
+import { LEVELS } from '../constants';
 import ScoreGauge from './ScoreGauge';
 import XPBar from './XPBar';
-import ChallengeCard from './ChallengeCard';
+import Badge from './Badge';
+import ProgressChart from './ProgressChart';
+import AnalyticsWidget from './AnalyticsWidget';
 
 interface DashboardProps {
-  user: User;
-  level: Level;
   challenges: ChallengeCategory[];
+  userProgress: UserProgress;
+  achievements: Achievement[];
   onSelectChallenge: (id: string) => void;
 }
 
-const Dashboard: React.FC<DashboardProps> = ({ user, level, challenges, onSelectChallenge }) => {
+const Dashboard: React.FC<DashboardProps> = ({ challenges, userProgress, achievements, onSelectChallenge }) => {
+  const { xp, level, score } = userProgress;
+  const minXp = level > 1 ? LEVELS[level - 1] : 0;
+  const maxXp = LEVELS[level] || LEVELS[LEVELS.length - 1];
+
+  const unlockedAchievements = achievements
+    .filter(a => a.unlocked)
+    .sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+
+  const nextChallenge = challenges.find(c => !c.content.tasks.every(t => t.completed));
+
   return (
-    <div>
-      <Header />
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8 mb-8">
-        <div className="lg:col-span-1 bg-slate-800/50 p-6 rounded-lg border border-slate-700 flex flex-col items-center justify-center shadow-lg shadow-cyan-500/10">
-          <h2 className="text-xl font-semibold text-slate-300 mb-4">Overall Security Score</h2>
-          <ScoreGauge score={user.securityScore} />
-        </div>
-        <div className="lg:col-span-2 bg-slate-800/50 p-6 rounded-lg border border-slate-700 shadow-lg">
-          <h2 className="text-2xl font-bold text-slate-100">Welcome back, <span className="text-cyan-400">{user.name}</span></h2>
-          <div className="mt-4">
-            <div className="flex justify-between items-baseline mb-2">
-              <p className="text-lg">
-                Level: <span className={`font-bold ${level.color}`}>{level.name}</span>
-              </p>
-              <p className="text-sm text-slate-400">
-                {user.xp} / {level.maxXp ? level.maxXp + 1 : 'Max'} XP
-              </p>
+    <div className="space-y-8">
+      <div className="bg-white/50 dark:bg-slate-800/50 rounded-lg border border-slate-200 dark:border-slate-700 p-6 flex flex-col sm:flex-row items-center justify-between gap-8 animate-slide-in stagger-1 opacity-0">
+         <div className="flex items-center gap-6">
+           <ScoreGauge score={score} />
+           <div>
+             <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-100">Your Privacy Profile</h2>
+             <p className="text-slate-500 dark:text-slate-400">Complete challenges to improve your score.</p>
+           </div>
+         </div>
+         <div className="w-full sm:w-1/3">
+           <div className="flex justify-between items-baseline mb-2">
+               <span className="font-bold text-cyan-600 dark:text-cyan-400">Level {level}</span>
+               <span className="text-xs text-slate-500 dark:text-slate-400">{xp} / {maxXp} XP</span>
+           </div>
+           <XPBar currentXp={xp} minXp={minXp} maxXp={maxXp} />
+         </div>
+       </div>
+
+       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+           <div className="bg-white/50 dark:bg-slate-800/50 rounded-lg border border-slate-200 dark:border-slate-700 p-6 animate-slide-in stagger-2 opacity-0">
+               <h3 className="text-lg font-semibold text-slate-800 dark:text-slate-100 mb-4">Proficiency</h3>
+               <ProgressChart challenges={challenges} />
+           </div>
+            <div className="animate-slide-in stagger-3 opacity-0">
+               <AnalyticsWidget challenges={challenges} />
+           </div>
+       </div>
+
+      <div className="bg-white/50 dark:bg-slate-800/50 rounded-lg border border-slate-200 dark:border-slate-700 p-6 animate-slide-in stagger-4 opacity-0">
+          <h3 className="text-lg font-semibold text-slate-800 dark:text-slate-100 mb-4">Next Goal</h3>
+          {nextChallenge ? (
+            <div onClick={() => onSelectChallenge(nextChallenge.id)} className="bg-slate-100 dark:bg-slate-900/50 p-4 rounded-md flex items-center gap-4 cursor-pointer hover:bg-slate-200/70 dark:hover:bg-slate-700/50 transition-colors">
+              <div className="text-cyan-600 dark:text-cyan-400 flex-shrink-0">{nextChallenge.icon}</div>
+              <div>
+                  <p className="font-semibold text-slate-800 dark:text-slate-200">{nextChallenge.title}</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400">{nextChallenge.description}</p>
+              </div>
             </div>
-            <XPBar
-              currentXp={user.xp}
-              minXp={level.minXp}
-              maxXp={level.maxXp ? level.maxXp + 1 : user.xp}
-            />
-          </div>
-        </div>
+          ) : (
+            <p className="text-slate-500 dark:text-slate-400 text-sm">Congratulations! You've completed all available challenges.</p>
+          )}
       </div>
+
+      <div className="bg-white/50 dark:bg-slate-800/50 rounded-lg border border-slate-200 dark:border-slate-700 p-6 animate-slide-in stagger-4 opacity-0">
+          <h3 className="text-lg font-semibold text-slate-800 dark:text-slate-100 mb-4">Recent Achievements</h3>
+          {unlockedAchievements.length > 0 ? (
+            <div className="flex flex-wrap gap-3">
+            {unlockedAchievements.slice(0, 5).map(achievement => (
+                <Badge key={achievement.id} type={achievement.name} />
+            ))}
+            </div>
+          ) : (
+            <p className="text-slate-500 dark:text-slate-400 text-sm">Complete a challenge to earn your first badge!</p>
+          )}
+      </div>
+
       <div>
-        <h2 className="text-2xl font-bold text-slate-100 mb-4">Training Modules</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {challenges.map(challenge => (
-            <ChallengeCard 
-              key={challenge.id}
-              challenge={challenge}
-              onClick={() => onSelectChallenge(challenge.id)}
-            />
+        <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-200 mb-4">Training Modules</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {challenges.map((challenge, i) => (
+            <div key={challenge.id} className={`animate-slide-in opacity-0`} style={{animationDelay: `${100 * i}ms`}}>
+                <ChallengeCard
+                challenge={challenge}
+                onClick={() => onSelectChallenge(challenge.id)}
+                />
+            </div>
           ))}
         </div>
       </div>

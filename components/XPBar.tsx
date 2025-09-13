@@ -13,7 +13,7 @@ const XPBar: React.FC<XPBarProps> = ({ currentXp, minXp, maxXp }) => {
   const progressPercentage = levelXpRange > 0 ? (xpInLevel / levelXpRange) * 100 : 100;
 
   return (
-    <div className="w-full bg-slate-700 rounded-full h-4 relative overflow-hidden border border-slate-600">
+    <div className="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-4 relative overflow-hidden border border-slate-300 dark:border-slate-600">
       <div
         className="bg-cyan-500 h-full rounded-full transition-all duration-500 ease-out"
         style={{ width: `${progressPercentage}%` }}
