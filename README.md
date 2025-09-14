@@ -6,7 +6,7 @@
 
 ## 🛡️ Cybersecurity Education Platform
 
-DYP.INC (Defend Your Privacy) is an interactive cybersecurity education platform designed for the Intervarsity Hackathon. This application gamifies cybersecurity learning through interactive challenges, games, and real-world scenarios to help users understand and defend against common cyber threats.
+DYP.INC (Defend Your Privacy) is an interactive cybersecurity education platform designed and built for the Intervarsity Hackathon. This application gamifies cybersecurity learning through interactive challenges, games, and real-world scenarios to help users understand and defend against common cyber threats.
 
 ## 🚀 Features
 
@@ -35,7 +35,6 @@ DYP.INC (Defend Your Privacy) is an interactive cybersecurity education platform
 
 1. **Install dependencies:**
    ```bash
-   cd src
    npm install
    ```
 
@@ -61,7 +60,7 @@ DYP.INC (Defend Your Privacy) is an interactive cybersecurity education platform
 
 ## 🏆 Hackathon Project
 
-This project was developed for the Intervarsity Hackathon, focusing on creating an accessible and engaging platform for cybersecurity education.
+This project was developed for the Intervarsity Hackathon, focusing on creating an accessible and engaging platform for cybersecurity education. Built from scratch with modern web technologies and best practices.
 
 ## 📄 License
 
