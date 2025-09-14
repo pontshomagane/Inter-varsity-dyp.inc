@@ -7,6 +7,7 @@ import Header from './components/Header';
 import Dashboard from './components/Dashboard';
 import ChallengeView from './components/ChallengeView';
 import AchievementToast from './components/AchievementToast';
+import Chatbot from './components/Chatbot';
 
 type Theme = 'light' | 'dark' | 'system';
 
@@ -115,6 +116,27 @@ function App() {
       return newChallenges;
     });
   }, [setChallenges, checkForAchievements]);
+
+  const handleCompleteMicroChallenge = useCallback((challengeId: string, points: number) => {
+    setChallenges(prevChallenges => {
+      const newChallenges = prevChallenges.map(challenge => {
+        if (challenge.id === challengeId) {
+          const newMicroTask = {
+            id: `micro-${Date.now()}`,
+            description: 'AI Coach Bonus Challenge',
+            points: points,
+            completed: true,
+          };
+          const newTasks = [...challenge.content.tasks, newMicroTask];
+          return { ...challenge, content: { ...challenge.content, tasks: newTasks }};
+        }
+        return challenge;
+      });
+       // Defer achievement check until after state update
+      setTimeout(() => checkForAchievements(newChallenges), 0);
+      return newChallenges;
+    });
+  }, [setChallenges, checkForAchievements]);
   
   const handleSelectChallenge = (id: string) => setSelectedChallengeId(id);
   const handleBackToDashboard = () => setSelectedChallengeId(null);
@@ -148,6 +170,11 @@ function App() {
           )}
         </main>
       </div>
+      <Chatbot 
+        userScore={userProgress.score} 
+        challenges={challenges}
+        onCompleteMicroChallenge={handleCompleteMicroChallenge} 
+      />
       {toastQueue.length > 0 && <AchievementToast achievement={toastQueue[0]} onClose={handleCloseToast}/>}
     </div>
   );

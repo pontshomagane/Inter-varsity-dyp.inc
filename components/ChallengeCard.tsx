@@ -1,5 +1,3 @@
-
-
 import React from 'react';
 import type { ChallengeCategory } from '../types';
 
@@ -19,7 +17,7 @@ const ChallengeCard: React.FC<ChallengeCardProps> = ({ challenge, onClick }) => 
       className="bg-white/50 dark:bg-slate-800/50 rounded-lg border border-slate-200 dark:border-slate-700 p-6 cursor-pointer transition-all duration-300 hover:border-cyan-500 dark:hover:border-cyan-400 hover:shadow-2xl hover:shadow-cyan-500/10 dark:hover:shadow-cyan-500/20 hover:-translate-y-1 group"
     >
       <div className="flex items-start justify-between">
-        <div className="text-cyan-600 dark:text-cyan-400 transition-colors group-hover:text-cyan-500 dark:group-hover:text-cyan-300">
+        <div className="text-cyan-600 dark:text-cyan-400 transition-all duration-300 ease-in-out group-hover:text-cyan-500 dark:group-hover:text-cyan-300 group-hover:scale-115 group-hover:rotate-6">
             {challenge.icon}
         </div>
         {isCompleted && (

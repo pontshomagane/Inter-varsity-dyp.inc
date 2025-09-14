@@ -22,7 +22,7 @@ const ScoreGauge: React.FC<ScoreGaugeProps> = ({ score }) => {
   }
 
   return (
-    <div className="relative w-48 h-48">
+    <div className="relative w-48 h-48" role="img" aria-label={`Security score: ${score} out of 100`}>
       <svg className="w-full h-full" viewBox="0 0 120 120">
         <circle
           className="stroke-slate-200 dark:stroke-slate-700"
