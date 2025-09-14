@@ -1,20 +1,76 @@
+# DYP.INC - Defend Your Privacy
+
 <div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+<img width="1200" height="475" alt="DYP.INC Banner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
 </div>
 
-# Run and deploy your AI Studio app
+## 🛡️ Cybersecurity Education Platform
 
-This contains everything you need to run your app locally.
+DYP.INC (Defend Your Privacy) is an interactive cybersecurity education platform designed for the Intervarsity Hackathon. This application gamifies cybersecurity learning through interactive challenges, games, and real-world scenarios to help users understand and defend against common cyber threats.
 
-View your app in AI Studio: https://ai.studio/apps/drive/14DkUKiw2AnrO1wbuopGKi6ui6p2dALsN
+## 🚀 Features
 
-## Run Locally
+- **Interactive Security Games**: Password strength testing, phishing detection, social engineering awareness
+- **Gamified Learning**: XP system, achievements, and progress tracking
+- **Real-time Threat Feed**: Stay updated with current cybersecurity threats
+- **AI-Powered Chatbot**: Get instant help and guidance on security topics
+- **Family Dashboard**: Track progress for multiple users
+- **Analytics & Insights**: Monitor learning progress and identify areas for improvement
 
-**Prerequisites:**  Node.js
+## 📁 Project Structure
 
+```
+├── assets/          # Static assets and media files
+├── demo/            # Demo materials and examples
+├── docs/            # Documentation and guides
+├── scripts/         # Build and deployment scripts
+├── src/             # Source code and application logic
+├── vendor/          # Third-party dependencies and libraries
+└── README.md        # This file
+```
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+## 🛠️ Quick Start
+
+**Prerequisites:** Node.js (v16 or higher)
+
+1. **Install dependencies:**
+   ```bash
+   cd src
+   npm install
+   ```
+
+2. **Set up environment:**
+   - Set the `GEMINI_API_KEY` in your environment variables to your Gemini API key
+
+3. **Run the application:**
+   ```bash
+   npm run dev
+   ```
+
+4. **Build for production:**
+   ```bash
+   npm run build
+   ```
+
+## 🎯 Target Audience
+
+- Students and educators
+- General public interested in cybersecurity
+- Organizations looking to improve security awareness
+- Anyone wanting to learn about digital privacy and security
+
+## 🏆 Hackathon Project
+
+This project was developed for the Intervarsity Hackathon, focusing on creating an accessible and engaging platform for cybersecurity education.
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🤝 Contributing
+
+We welcome contributions! Please see our [Contributing Guidelines](docs/CONTRIBUTING.md) for more information.
+
+## 📞 Support
+
+For support and questions, please open an issue in this repository or contact the development team.
